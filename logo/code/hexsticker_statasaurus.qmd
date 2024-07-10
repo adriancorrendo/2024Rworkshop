@@ -1,5 +1,5 @@
 ---
-title: "Stats-Hub logo"
+title: "2024 logo"
 author: Adrian Correndo
 format: html
 ---
@@ -26,20 +26,9 @@ library(sysfonts)
 
 ```
 
-
 ## 01. Prepare images
 
 ```{r}
-image_networking <- magick::image_read('../images/networking.png')
-hub <- magick::image_read("../images/hub.png")
-calendar <- magick::image_read('../images/calendar.png')
-dinosaur <- magick::image_read('../images/dinosaur.png')
-footprint <- magick::image_read('../images/footprint.png')
-
-hack01 <- magick::image_read('../images/hackathon.png')
-hack02 <- magick::image_read('../images/hackathon_02.png')
-hack03 <- magick::image_read('../images/coding.png')
-
 # datasauRus
 datasaurus_df <- datasauRus::datasaurus_dozen %>% dplyr::filter(dataset == "dino")
 

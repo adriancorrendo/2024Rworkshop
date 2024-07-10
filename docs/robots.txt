@@ -1,1 +1,1 @@
-Sitemap: https://adriancorrendo.github.io/statasaurusweb/sitemap.xml
+Sitemap: https://adriancorrendo.github.io/2024Rworkshop/sitemap.xml
