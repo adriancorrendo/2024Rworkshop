@@ -45,14 +45,7 @@ website:
             text: "1_intro"
           - href: e2_bayes_1.qmd
             text: "2_bayes_1"
-          - href: e3_bayes_2.qmd
-            text: "3_bayes_2"
-          - href: e4_bayes_3.qmd
-            text: "4_bayes_3"
-          - href: e5_shinyapps.qmd
-            text: "5_shinyapps"
-          - href: e7_metaanalysis.qmd
-            text: "7_meta_analysis"
+          
       
     
 format:

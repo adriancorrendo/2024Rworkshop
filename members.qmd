@@ -6,31 +6,13 @@ format:
     linestretch: 1
 ---
 
-### Fall 2022
+### Summer 2024
 
-| Member              | GitHub user                              |
-|---------------------|------------------------------------------|
-| Adrian Correndo     | <https://github.com/adriancorrendo>      |
-| Ignacio Massigoge   | <https://github.com/imassigoge>          |
-| Luciana Nieto       | <https://github.com/luciananieto>        |
-| Valentina Pereyra   | <https://github.com/valentinapereyra>    |
-| Mario Secchi        | <https://github.com/mariosecchi>         |
-| Josefina Lacasa     | <https://github.com/jlacasa>             |
-| Luiz Felipe         | <https://github.com/luizfelipeaa>        |
-| Juan Rybecky        | <https://github.com/juanrybecky>         |
-| Emma van Versendaal | <https://github.com/emmavanver>          |
-| Francisco Palmero   | <https://github.com/fpalmeroo>           |
-| Danilo Tedesco      | <https://github.com/tedescodanilo>       |
-| Nilson Vieira       | <https://github.com/nvieirajr>           |
-| Lucia Marziote      | <https://github.com/Luciamar>            |
-| Carlos Hernandez    | <https://github.com/Carlitosh>           |
-| Ana Carcedo         | <https://github.com/anajpcarcedo>        |
-| Nicolas Giordano    | <https://github.com/giordanon>           |
-| Lara Zini           | <https://github.com/larazini>            |
-| Gustavo Santiago    | <https://github.com/GustavoSantiago1103> |
-| Ignacio Rodriguez   | <https://github.com/nachorodr>           |
-| Pia Rodriguez       | <https://github.com/piarod1r>            |
-| Thomas Varela       | <https://github.com/thomasvarela>        |
-| Leonardo Bosche     | \-                                       |
-| Agustina Goñi       | \-                                       |
-| Yesica Chazarreta   | \-                                       |
+| Member           | GitHub user                          |
+|------------------|--------------------------------------|
+| Adrian Correndo  | <https://github.com/adriancorrendo>  |
+| Alanna Starcevic | <https://github.com/AlannaStarcevic> |
+| Annale Huxtable  | <https://github.com/AnnaleeHuxtable> |
+| Jacob Drewniak   | <https://github.com/Jacobdrew>   |
+| Diego Menacho    | <https://github.com/diegomenacho>    |
+| Ginna Rozo    | <https://github.com/ginnarozo>    |
