@@ -6,8 +6,8 @@ website:
   page-navigation: true
   title: "Statasaurus - Fall 2022"
   description: "Homepage for the Statasaurus Team"
-  site-url: "https://adriancorrendo.github.io/statasaurusweb/"
-  repo-url: "https://github.com/adriancorrendo/statasaurusweb/"
+  site-url: "https://adriancorrendo.github.io/2024Rworkshop/"
+  repo-url: "https://github.com/adriancorrendo/2024Rworkshop/"
   repo-actions: [edit, issue]
   
   open-graph: true
@@ -20,7 +20,7 @@ website:
   
       
   sidebar:
-    logo: "images/statasaurus_logo.png"
+    logo: "images/2024_logo.png"
     pinned: true
     align: center
     tools:
@@ -41,16 +41,15 @@ website:
             text: "Members"
       - section: "Encounters"
         contents:
-          - href: e1_intro.qmd
-            text: "1_intro"
-          - href: e2_bayes_1.qmd
-            text: "2_bayes_1"
+          - href: e4_github.qmd
+            text: "04_github"
+ 
           
       
     
 format:
   html:
-    theme: cosmo
+    theme: mint
     css: styles.css
     toc: true
     toc-title: "On this section"
