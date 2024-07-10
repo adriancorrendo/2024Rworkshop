@@ -1,0 +1,192 @@
+---
+title: "Ag-Hackathon logo"
+author: Adrian Correndo
+format: html
+---
+
+# Creating the sticker
+
+This is a short tutorial to easily create your own stickers!
+
+Let's give it a try for this group and find our identity! 🙃
+
+## 00. Libraries
+
+```{r}
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(magick)
+library(hexSticker)
+library(sysfonts)
+
+```
+
+## 01. Prepare images
+
+```{r}
+hack01 <- magick::image_read('../images/hackathon.png')
+hack02 <- magick::image_read('../images/hackathon_02.png')
+hack03 <- magick::image_read('../images/coding.png')
+```
+
+## 02. Load fonts
+
+```{r}
+
+fonts <- font_files()
+
+# Check font paths
+# font_paths()
+
+# Add the font we want
+font_add(family = "Bahnschrift", regular = "C:\\Windows\\Fonts\\bahnschrift.ttf")
+
+```
+
+## 03. Stickers
+
+### Defining colors palette
+```{r}
+# define pallete
+palette <- list('background' = '#d8f3dc',
+                'font' = '#4d908e',
+                'border' = '#0a9396',
+                'note' = 'grey25')
+
+# Single Palette elements
+background_color = '#d8f1ef'
+font_color = "#272640"
+border_color = "#1b3a4b"
+note_color = "black"
+
+# Or we may just call the colors at each place if we are rotating options
+```
+
+### Option 01
+```{r}
+hex_hack01 <- sticker(
+  # Title
+  package = "AgHackathon",
+  # Title attributes
+  p_family = "Bahnschrift",
+  p_color = "#272640",
+  p_size = 40,
+  p_y = 0.6,
+  # Image
+  subplot = hack01,
+  # Image attributes
+  s_width = 1.1,
+  s_height = 1.1,
+  s_x = 1,
+  s_y = 1.18,
+  # Hexagon attributes
+  h_fill = '#d8f1ef',
+  h_color = "#1b3a4b",
+  h_size = 2,
+  # Add a link
+  url = "image: Flaticon.com",
+  u_size = 5,
+  u_color = note_color,
+  # Add spotlight
+  spotlight = F,
+  # Spotlight attributes
+  # add some shadow to the pictures
+  l_y = 1,
+  l_width = 3,
+  l_height = 3,
+  l_alpha = 0.5,
+  # File saving
+  filename = "AgHackaton_logo_01.png",
+  dpi = 600,
+  white_around_sticker = FALSE
+  ) 
+
+hex_hack01
+```
+
+### Option 02
+```{r}
+hex_hack02 <- sticker(
+  # Title
+  package = "AgHackathon",
+  # Title attributes
+  p_family = "Bahnschrift",
+  p_color = "#d8f1ef",
+  p_size = 40,
+  p_y = 0.58,
+  # Image
+  subplot = hack02,
+  # Image attributes
+  s_width = 1.1,
+  s_height = 1.1,
+  s_x = 1,
+  s_y = 1.21,
+  # Hexagon attributes
+  h_fill = "#1b3a4b",
+  h_color = "#778da9",
+  h_size = 0.5,
+  # Add a link
+  url = "image: Flaticon.com",
+  u_size = 5,
+  u_color = "#d8f1ef",
+  # Add spotlight
+  spotlight = F,
+  # Spotlight attributes
+  # add some shadow to the pictures
+  l_y = 1,
+  l_width = 3,
+  l_height = 3,
+  l_alpha = 0.5,
+  # File saving
+  filename = "AgHackaton_logo_02.png",
+  dpi = 600,
+  white_around_sticker = FALSE
+  ) 
+
+hex_hack02
+```
+
+### Option 03
+```{r}
+hex_hack03 <- sticker(
+  # Title
+  package = "AgHackathon",
+  # Title attributes
+  p_family = "Bahnschrift",
+  p_color = "#d8f1ef",
+  p_size = 40,
+  p_y = 0.58,
+  # Image
+  subplot = hack03,
+  # Image attributes
+  s_width = 1.0,
+  s_height = 1.0,
+  s_x = 1,
+  s_y = 1.21,
+  # Hexagon attributes
+  h_fill = "#3d2645",
+  h_color = "#d8f1ef",
+  h_size = 0.5,
+  # Add a link
+  url = "image: Flaticon.com",
+  u_size = 5,
+  u_color = "#d8f1ef",
+  # Add spotlight
+  spotlight = F,
+  # Spotlight attributes
+  # add some shadow to the pictures
+  l_y = 1,
+  l_width = 3,
+  l_height = 3,
+  l_alpha = 0.5,
+  # File saving
+  filename = "AgHackaton_logo_03.png",
+  dpi = 600,
+  white_around_sticker = FALSE
+  )  
+
+hex_hack03
+```
+
