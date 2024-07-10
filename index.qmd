@@ -5,7 +5,7 @@ format:
     fontsize: 1.25em
 ---
 
-Welcome to the 🍂 Fall 2022 Season 🍂 of Statasaurus!
+Welcome to the 🍂 Summer 2024 Season 🍂 of Statasaurus!
 
 *History*
 
