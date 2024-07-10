@@ -13,6 +13,6 @@ format:
 | Adrian Correndo  | <https://github.com/adriancorrendo>  |
 | Alanna Starcevic | <https://github.com/AlannaStarcevic> |
 | Annale Huxtable  | <https://github.com/AnnaleeHuxtable> |
-| Jacob Drewniak   | <https://github.com/Jacobdrew>   |
+| Jacob Drewniak   | <https://github.com/Jacobdrew>       |
 | Diego Menacho    | <https://github.com/diegomenacho>    |
-| Ginna Rozo    | <https://github.com/ginnarozo>    |
+| Ginna Rozo       | <https://github.com/ginnarozo>       |
