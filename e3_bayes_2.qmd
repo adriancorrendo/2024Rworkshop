@@ -1,0 +1,519 @@
+---
+title: "Week #3"
+author: "Adrian Correndo & Josefina Lacasa"
+format:
+  html:
+    fontsize: 0.8em
+    linestretch: 1
+---
+
+# Introduction to Bayesian Stats #2
+
+This is a follow-up article from [Bayes#1](https://adriancorrendo.github.io/statasaurusweb/code_2_bayes_1.html). Still, we do have numerous important concepts in order to understand what the computational codes are doing behind scenes when running a Bayesian analysis.
+
+::: callout-note
+**Today's Topics**:
+
+Computing posterior distributions:
+
+#1. Acceptance/Rejection Sampling Basics:
+
+#2. Markov Chain Monte Carlo (MCMC) -more efficient than AR sampling-.
+
+Packages for Bayesian analysis in R:
+
+#3. brms
+
+#4. rstan
+
+#5. rjags
+:::
+
+## Packages to use today
+
+```{r include=TRUE, warning=FALSE, message=FALSE}
+library(latex2exp)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(tibble)
+library(purrr)
+library(brms)
+library(tidybayes)
+
+```
+
+## Computing posterior distributions:
+
+### 1. Acceptance/Rejection Sampling Basics:
+
+1\. Generate proposal parameter values
+
+2\. Generate data with those parameters
+
+3\. Compare the simulated data with the observed data = "difference"
+
+4\. "**Accept**" that combination of parameters if the difference \< predefined acceptable error. "**Reject**" if the difference \> predefined acceptable error.
+
+See an example:
+
+Using data of yield vs plant density in corn:
+
+```{r, echo=FALSE}
+b0_true <- 5
+b1_true <- 2.2
+b2_true <- .125
+
+x <- seq(3, 12, by = .2)
+mu <- b0_true + x*b1_true - (x^2)*b2_true
+
+set.seed(42)
+y <- mu + rnorm(length(x), 0, sqrt(.4))
+plot(x, y)
+
+data_frame <- new_tibble(list(x = x, y = y))
+
+
+
+```
+
+$$ y = \beta_0 + x \cdot \beta_1 - x^2 \cdot \beta_2$$
+
+```{r settings, include=FALSE}
+# Algorithm settings
+K_tries <- 10^6  # Number of simulated data sets to make
+diff <- matrix(, K_tries, 1)  # Vector to save the measure of discrepancy between simulated data and real data
+error <- 80  # Allowable difference between simulated data and real data
+
+# Known random variables and parameters
+n <- length(x)
+```
+
+```{r prep objects, include=FALSE}
+posterior_samp_parameters <- matrix(, K_tries, 4)  # Matrix to samples of save unknown parameters
+colnames(posterior_samp_parameters) <- c("b0", "b1", "b2", "sigma")
+
+y_hat <- matrix(, K_tries, n)  # Matrix to samples of save unknown number of whooping cranes
+```
+
+```{r demo acc-rej, include=FALSE}
+k = 1
+```
+
+1.  Generate proposal parameter values **using the prior ditributions**:
+
+$$\beta_0 \sim uniform(4, 6)$$
+
+$$\beta_1 \sim uniform(1, 3)$$
+
+$$\beta_2 \sim uniform(0.5, 2)$$
+
+$$\sigma \sim Gamma(2, 2)$$
+
+```{r demo 1}
+set.seed(567)
+b0_try <- runif(1, 4, 6)  # Parameter model
+b1_try <- runif(1, 1, 3)  # Parameter model 
+b2_try <- rgamma(1, .5, 2) # Mathematical equation for process model
+mu_try <- b0_try + x*b1_try - (x^2)*b2_try
+sigma_try <- rgamma(1, 2, 2)
+```
+
+2.  Generate data with those parameters\
+
+```{r demo 1b}
+set.seed(567)
+y_try <- rnorm(n, mu_try, sigma_try)  # Process model
+```
+
+3.  Compare the simulated data with the observed data = "difference"
+
+```{r demo 1c}
+# Record difference between draw of y from prior predictive distribution and
+# observed data
+diff[k, ] <- sum(abs(y - y_try))
+```
+
+```{r demo 1d, include=FALSE}
+# Save unkown random variables and parameters
+y_hat[k, ] <- y_try
+
+posterior_samp_parameters[k, ] <- c(b0_try, b1_try, b2_try, sigma_try)
+```
+
+4.  "**Accept**" (gold) that combination of parameters if the difference \< predifined acceptable error. "**Reject**" (red) if the difference \> predifined acceptable error.
+
+```{r demo 1e}
+plot(x, y, xlab = "Plant density", 
+     ylab = "Observed yield", xlim = c(2, 13), ylim = c(5, 20),
+     typ = "b", cex = 0.8, pch = 20, col = rgb(0.7, 0.7, 0.7, 0.9))
+points(x, y_hat[k,], typ = "b", lwd = 2, 
+       col = ifelse(diff[1] < error, "gold", "tomato"))
+```
+
+```{r demo 1f, echo=FALSE}
+set.seed(66789)
+k = 1
+b0_try <- runif(1, 4, 6)  # Parameter model
+b1_try <- runif(1, 1, 3)  # Parameter model 
+b2_try <- rgamma(1, .5, 2) # Mathematical equation for process model
+mu_try <- b0_try + x*b1_try - (x^2)*b2_try
+sigma_try <- rgamma(1, 2, 2)
+
+y_try <- rnorm(n, mu_try, sigma_try)  # Process model
+
+# Record difference between draw of y from prior predictive distribution and
+# observed data
+diff[k, ] <- sum(abs(y - y_try))
+
+# Save unkown random variables and parameters
+y_hat[k, ] <- y_try
+
+posterior_samp_parameters[k, ] <- c(b0_try, b1_try, b2_try, sigma_try)
+
+plot(x, y, xlab = "Plant density", 
+     ylab = "Observed yield", xlim = c(2, 13), ylim = c(5, 20),
+     typ = "b", cex = 0.8, pch = 20, col = rgb(0.7, 0.7, 0.7, 0.9))
+
+points(x, y_hat[k,], typ = "b", lwd = 2, 
+       col = ifelse(diff[1] < error, "gold", "tomato"))
+
+```
+
+```{r demo 1g, echo=FALSE}
+set.seed(76543)
+k = 1
+b0_try <- runif(1, 4, 6)  # Parameter model
+b1_try <- runif(1, 1, 3)  # Parameter model 
+b2_try <- rgamma(1, .5, 2) # Mathematical equation for process model
+mu_try <- b0_try + x*b1_try - (x^2)*b2_try
+sigma_try <- rgamma(1, 2, 2)
+
+y_try <- rnorm(n, mu_try, sigma_try)  # Process model
+
+# Record difference between draw of y from prior predictive distribution and
+# observed data
+diff[k, ] <- sum(abs(y - y_try))
+
+# Save unkown random variables and parameters
+y_hat[k, ] <- y_try
+
+posterior_samp_parameters[k, ] <- c(b0_try, b1_try, b2_try, sigma_try)
+
+plot(x, y, xlab = "Plant density", 
+     ylab = "Observed yield", xlim = c(2, 13), ylim = c(5, 20),
+     typ = "b", cex = 0.8, pch = 20, col = rgb(0.7, 0.7, 0.7, 0.9))
+
+points(x, y_hat[k,], typ = "b", lwd = 2, 
+       col = ifelse(diff[1] < error, "gold", "tomato"))
+
+```
+
+Now, what if whe change the priors:
+
+```{r echo=FALSE}
+k = 1
+b0_try <- rnorm(1, 5, .01)  # Parameter model
+b1_try <- rnorm(1, 2.2, .01)  # Parameter model 
+b2_try <- rgamma(1, .25, 2) # Mathematical equation for process model
+mu_try <- b0_try + x*b1_try - (x^2)*b2_try
+sigma_try <- rgamma(1, 2, 2)
+
+y_try <- rnorm(n, mu_try, sigma_try)  # Process model
+
+# Record difference between draw of y from prior predictive distribution and
+# observed data
+diff[k, ] <- sum(abs(y - y_try))
+
+# Save unkown random variables and parameters
+y_hat[k, ] <- y_try
+
+posterior_samp_parameters[k, ] <- c(b0_try, b1_try, b2_try, sigma_try)
+
+plot(x, y, xlab = "Plant density",
+     ylab = "Observed yield", xlim = c(2, 13), ylim = c(5, 20),
+     typ = "b", cex = 0.8, pch = 20, col = "grey20")
+
+points(x, y_hat[k,], typ = "b",
+       lwd = 2, 
+       col = ifelse(diff[1] < error, "gold", "tomato"))
+```
+
+Now, do many tries
+
+```{r}
+for (k in 1:K_tries) {
+    
+    b0_try <- runif(1, 2, 10)  # Parameter model
+    b1_try <- rnorm(1, 2.2, .5)  # Parameter model 
+    b2_try <- rgamma(1, .25, 2) # Mathematical equation for process model
+    mu_try <- b0_try + x*b1_try - (x^2)*b2_try
+    sigma_try <- rgamma(1, 2, 2)
+
+    y_try <- rnorm(n, mu_try, sigma_try)  # Process model
+    
+    # Record difference between draw of y from prior predictive distribution and
+    # observed data
+    diff[k, ] <- sum(abs(y - y_try))
+    
+    # Save unkown random variables and parameters
+    y_hat[k, ] <- y_try
+    
+    posterior_samp_parameters[k, ] <- c(b0_try, b1_try, b2_try, sigma_try)
+}
+```
+
+Acceptance rate
+
+```{r}
+length(which(diff < error))/K_tries
+```
+
+Priors versus posteriors:
+
+```{r, echo=FALSE}
+hist(posterior_samp_parameters[which(diff < error), 1], col = "grey", freq = FALSE, 
+    xlim = c(1.5, 10.5), main = "", xlab = TeX("$\\beta_0  | \\y$"), ylab = TeX("$\\lbrack\\beta_0  | \\y\\rbrack$"))
+curve(dunif(x, 2, 10), col = "tomato", lwd = 3, add = TRUE)
+```
+
+```{r post 2, echo=FALSE}
+hist(posterior_samp_parameters[which(diff < error), 2], col = "grey", freq = FALSE, 
+    xlim = c(2, 3), main = "", xlab = TeX("$\\beta_1  | \\y$"), 
+    ylab = TeX("$\\lbrack\\beta_1  | \\y\\rbrack$"))
+curve(dnorm(x, 2.2, .5), col = "tomato", lwd = 3, add = TRUE)
+```
+
+```{r post 3, echo=FALSE}
+hist(posterior_samp_parameters[which(diff < error), 3], col = "grey", freq = FALSE, 
+    xlim = c(0, 1), main = "", xlab = TeX("$\\beta_2  | \\y$"), ylab = TeX("$\\lbrack\\beta_2  | \\y\\rbrack$"))
+curve(dgamma(x, .25, 2), col = "tomato", lwd = 3, add = TRUE)
+```
+
+```{r}
+hist(y_hat[which(diff < error), 25], col = "grey", freq = FALSE)
+abline(v = y[25], col = 'gold', lty = "dashed", lwd = 5)
+```
+
+```{r final, include=FALSE}
+e.y <- colMeans(y_hat[which(diff < error), ])
+
+lwr.CI <- apply(y_hat[which(diff < error), ], 2, FUN = quantile, prob = c(0.025))
+upper.CI <- apply(y_hat[which(diff < error), ], 2, FUN = quantile, prob = c(0.975))
+```
+
+```{r, echo=FALSE}
+plot(x, y, xlab = "Plant density",
+     ylab = "Observed yield", xlim = c(2, 13), ylim = c(5, 20),
+     typ = "b", cex = 0.8, pch = 20, col = "grey20")
+
+points(x, e.y, typ = "l", lwd = 2)
+
+polygon(c(x, rev(x)), c(lwr.CI, rev(upper.CI)), col = rgb(0.5, 0.5, 0.5, 0.3), border = NA)
+```
+
+Let's get started
+
+## 2. Markov Chain Monte Carlo
+
+![](images/Handbook.jpg){width="241"}
+
+Markov chain Monte Carlo (MCMC) methods have revolutionized statistical computing and have had an especially profound impact on the practice of Bayesian statistics (Brooks et al., 2011).
+
+In a nutshell, MCMC represents a family of algorithms that facilitate the generation of random samples from probability distributions that are difficult (e.g. high-dimensional) to sample directly. They are "chains" because the random samples are produced in consecutive-dependent steps (i.e. step 2 comes from step 1, step 3 comes from step 2, ....). This details is a game-changer to more efficiently use and integrate Monte Carlos simulations.
+
+Sources on MCMC:
+
+<https://www.mcmchandbook.net/>
+
+<https://cran.r-project.org/package=MCMCpack>
+
+<https://cran.r-project.org/package=mcmc>
+
+<https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3759243>
+
+::: {align="center"}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Qqz5AJjyugM" frameborder="0" allowfullscreen>
+
+</iframe>
+:::
+
+## 3. *brms*: Bayesian Regression Models using "Stan"
+
+![](images/brms.png)
+
+Documentation: <https://paul-buerkner.github.io/brms/>
+
+Bug-reports: <https://github.com/paul-buerkner/brms/issues>
+
+*brms* is a very handy R-package that facilitates running Bayesian models using a relatively simple syntax. It is basically and interface that runs "Stan" behind the scenes. It uses a syntax quite similar to the [lme4](https://cran.r-project.org/package=lme4) package.
+
+It allows to use several different type of distributions and link functions for models that are linear, counts, survival, response, ordinal, zero-inflated, etc.
+
+Due to its relatively simple syntax, today, we are going to start our Bayesian coding with brms.
+
+More about brms at <https://www.jstatsoft.org/article/view/v080i01>
+
+![](images/paste-6C740B97.png){width="336"}
+
+### Fit brms
+
+Let's fit the example using the brms package.
+
+### brms pars
+
+```{r}
+# Set up pars
+WU = 1000
+IT = 5000
+TH = 5
+CH = 4
+AD = 0.99
+```
+
+### Model
+
+```{r}
+
+#| eval: false
+#| echo: true
+
+# 01. Run models
+
+bayes_model <- 
+
+  brms::brm(
+  #Priors
+  prior = c(
+    #B0, Intercept
+    prior(prior = 'normal(8, 8)', nlpar = 'B0', lb = 0),
+    #B1, Linear Slope
+    prior(prior = 'normal(2, 4)', nlpar = 'B1', lb = 0),
+    #B2, Quadratic coeff
+    prior(prior = 'normal(0.001, 0.5)', nlpar = 'B2', lb = 0) ),
+    # Sigma  
+    #prior(prior = 'gamma(15,1.3)', class = "sigma") ),  
+    # Population prior (median and sd)
+    
+    # Formula
+  formula = bf(y ~  B0 + B1 * x - B2 * (x^2),
+               # Hypothesis
+               B0 + B1 + B2 ~ 1,
+               nl = TRUE), 
+  # Data  
+  data = data_frame, sample_prior = "yes",
+  # Likelihood of the data
+  family = gaussian(link = 'identity'),
+  # brms controls
+  control = list(adapt_delta = AD),
+  warmup = WU, iter = IT, thin = TH,
+  chains = CH, cores = CH,
+  init_r = 0.1, seed = 1) 
+
+# 02. Save object
+# saveRDS(object = bayes_model, file = "bayes_model.RDS")
+
+# Load from file
+bayes_model <- readRDS(file = "assets/class03/bayes_model.RDS")
+
+# 03. Visual Diagnostic
+plot(bayes_model)
+
+# Visualize model results
+bayes_model
+
+# Compare vs traditional linear model (lm)
+data_frame_q <- data_frame %>% mutate(x2 = x^2)
+
+lm(data = data_frame_q, formula = y ~ x + x2)
+
+
+```
+
+### Using posterior distributions
+
+```{r}
+# Create predictions
+m1 <- data_frame %>% 
+  ungroup() %>% 
+  dplyr::select(x) %>% 
+  group_by(x) %>% filter(x == max(x)) %>% 
+  ungroup() %>% unique() %>% rename(max = x) %>% 
+  # Generate a sequence of x values
+  mutate(data = max %>% purrr::map(~data.frame(
+    x = seq(0,.,length.out = 400)))) %>% 
+  unnest() %>% dplyr::select(-max) %>%
+  
+  #add_linpred_draws(m1, re_formula = NA, n = NULL) %>% ungroup()
+  # use ".linpred to summarize"
+  tidybayes::add_predicted_draws(bayes_model, 
+                                 re_formula = NA, ndraws = NULL) %>% ungroup()
+
+# Summarize
+m1_quantiles <- m1 %>% 
+  group_by(x) %>% 
+  summarise(q025 = quantile(.prediction,.025),
+            q010 = quantile(.prediction,.10),
+            q250 = quantile(.prediction,.25),
+            q500 = quantile(.prediction,.500),
+            q750 = quantile(.prediction,.75),
+            q900 = quantile(.prediction,.90),
+            q975 = quantile(.prediction,.975))
+
+# Plot
+m1_plot <- ggplot()+
+  # 95%
+  geom_ribbon(data = m1_quantiles, alpha=0.60, fill = "cornsilk3",
+              aes(x=x, ymin=q025, ymax=q975))+
+  # 80%
+  geom_ribbon(data = m1_quantiles, alpha=0.25, fill = "cornsilk3",
+              aes(x=x, ymin=q010, ymax=q900))+
+  # 50%
+  geom_ribbon(data = m1_quantiles, alpha=0.5, fill = "#8a817c",  
+              aes(x=x, ymin=q250, ymax=q750))+
+  geom_path(data = m1_quantiles,
+            aes(x=x, y=q500, color = "brms()"), size = 1)+
+  geom_point(data = data_frame, aes(x=x, y=y, color = "brms()"), alpha = 0.25)+
+  # Add LM curve
+  geom_smooth(data = data_frame, aes(x=x, y=y, color = "lm()"),  
+              method = "lm", formula = y ~ poly(x,2), se = T)+
+  scale_color_viridis_d()+
+  scale_x_continuous(limits = c(0,12), breaks = seq(0,12, by = 1))+
+  scale_y_continuous(limits = c(4,16), breaks = seq(4,16, by = 1))+
+  #facet_wrap(~as.factor(C.YEAR), nrow = 4)+
+  theme_bw()+
+  theme(legend.position='right', 
+        legend.title = element_blank(),
+        panel.grid = element_blank(),
+        axis.title = element_text(size = rel(2)),
+        axis.text = element_text(size = rel(1)),
+        strip.text = element_text(size = rel(1.5)),
+        )+
+  labs(x = "Plant density (pl/m2)", y = "Corn yield (Mg/ha)")
+
+m1_plot
+```
+
+## 4. *rstan*: R interface to "Stan"
+
+![](images/stanlogo.png){width="190"}
+
+Documentation: <https://mc-stan.org/rstan/>
+
+Bug reports: <https://github.com/stan-dev/rstan/issues/>
+
+*stan* is a stand-alone open-source software platform designed for statistical modeling using high-performance statistical computation applying its own language. When selecting the Bayesian computational approach (i.e. ***rejection sampling criteria***) there are several alternatives to choose. *Stan* produces Bayesian statistical inference following Hamiltonian Monte Carlo (HMC), and No-U-Turn Samples (NUTS). Besides R, *stan* has interfaces with other popular languages such as Python, MATLAB, Julia.
+
+In contrast to *brms*, stan's syntax is more complicated for begginers, but the positive side is that requires us to write the statistical model.
+
+We will not fit a model directly with stan today, but *brms* brings a function that allows users to obtain the code to run the analysis by ourselves using rstan. Let's see...
+
+## 5. *rjags*: R interface to "Just Another Gibbs Sampler"
+
+![](images/1601161_JAGS.png){width="318"}
+
+Documentation: <https://mcmc-jags.sourceforge.io/>
+
+Bug reports: <https://sourceforge.net/projects/mcmc-jags/>
+
+*rjags* is another popular option for Bayesian statistical inference following MCMC using R. *Rjags* produces Bayesian statistical inference following BUGS language (WinBUGS). Similar to *stan*, *rjags* it is probably not for beginner, since it requires us to write out the statistical model (although it is always ideal). To extract the posteriors, it also requires [coda](https://cran.r-project.org/web/packages/coda/index.html), which is especially designed for summarizing and plotting MCMC simulations.

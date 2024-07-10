@@ -1,0 +1,72 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  page-navigation: true
+  title: "Statasaurus - Fall 2022"
+  description: "Homepage for the Statasaurus Team"
+  site-url: "https://adriancorrendo.github.io/statasaurusweb/"
+  repo-url: "https://github.com/adriancorrendo/statasaurusweb/"
+  repo-actions: [edit, issue]
+  
+  open-graph: true
+  twitter-card:
+    creator: "@aacorrendo"
+    
+  page-footer: 
+    left: "<span> Developed by Adrian Correndo using [Quarto](https://quarto.org/). License: [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). </span>"
+    background: dark
+  
+      
+  sidebar:
+    logo: "images/statasaurus_logo.png"
+    pinned: true
+    align: center
+    tools:
+      - icon: github
+        href: https://github.com/adriancorrendo/Stats_Hub_2022
+        
+    style: "docked"
+    search: true
+    collapse-level: 1
+    contents:
+      - section: "About"
+        contents: 
+          - href: index.qmd
+            text: "Description"
+          - href: schedule.qmd
+            text: "Schedule"
+          - href: members.qmd
+            text: "Members"
+      - section: "Encounters"
+        contents:
+          - href: e1_intro.qmd
+            text: "1_intro"
+          - href: e2_bayes_1.qmd
+            text: "2_bayes_1"
+          - href: e3_bayes_2.qmd
+            text: "3_bayes_2"
+          - href: e4_bayes_3.qmd
+            text: "4_bayes_3"
+          - href: e5_shinyapps.qmd
+            text: "5_shinyapps"
+          - href: e7_metaanalysis.qmd
+            text: "7_meta_analysis"
+      
+    
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-title: "On this section"
+    toc-location: right
+    code-copy: true
+    code-overflow: scroll
+    highlight-style: pygments
+    
+freeze: auto
+
+editor: visual
+

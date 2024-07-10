@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Adrian Correndo">
+
+<title>Statasaurus - Fall 2022 - Week #1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./e2_bayes_1.html" rel="next">
+<link href="./members.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Statasaurus - Fall 2022 - Week #1">
+<meta property="og:description" content="This contains notes about the introductory meeting, intended to:">
+<meta property="og:site-name" content="Statasaurus - Fall 2022">
+<meta name="twitter:title" content="Statasaurus - Fall 2022 - Week #1">
+<meta name="twitter:description" content="This contains notes about the introductory meeting, intended to:">
+<meta name="twitter:creator" content="@aacorrendo">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Week #1</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+      <a href="./" class="sidebar-logo-link">
+      <img src="./images/statasaurus_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main">
+    <a href="https://github.com/adriancorrendo/Stats_Hub_2022" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+</div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">About</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Description</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">Schedule</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./members.html" class="sidebar-item-text sidebar-link">Members</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Encounters</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e1_intro.html" class="sidebar-item-text sidebar-link active">1_intro</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e2_bayes_1.html" class="sidebar-item-text sidebar-link">2_bayes_1</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e3_bayes_2.html" class="sidebar-item-text sidebar-link">3_bayes_2</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e4_bayes_3.html" class="sidebar-item-text sidebar-link">4_bayes_3</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e5_shinyapps.html" class="sidebar-item-text sidebar-link">5_shinyapps</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e7_metaanalysis.html" class="sidebar-item-text sidebar-link">7_meta_analysis</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this section</h2>
+   
+  <ul>
+  <li><a href="#introduction-to-github-and-quarto" id="toc-introduction-to-github-and-quarto" class="nav-link active" data-scroll-target="#introduction-to-github-and-quarto">Introduction to GitHub and Quarto</a>
+  <ul class="collapse">
+  <li><a href="#what-is-github" id="toc-what-is-github" class="nav-link" data-scroll-target="#what-is-github"><img src="images/github-brands.svg" width="22" height="22"> What is GitHub?</a></li>
+  <li><a href="#what-is-quarto" id="toc-what-is-quarto" class="nav-link" data-scroll-target="#what-is-quarto">What is Quarto?</a>
+  <ul class="collapse">
+  <li><a href="#installing-quarto" id="toc-installing-quarto" class="nav-link" data-scroll-target="#installing-quarto">Installing Quarto</a></li>
+  <li><a href="#todays-exercise" id="toc-todays-exercise" class="nav-link" data-scroll-target="#todays-exercise">Today’s exercise</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/adriancorrendo/statasaurusweb/edit/main/e1_intro.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/adriancorrendo/statasaurusweb/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Week #1</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Adrian Correndo </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction-to-github-and-quarto" class="level1">
+<h1>Introduction to GitHub and Quarto</h1>
+<p>This contains notes about the introductory meeting, intended to:</p>
+<ol type="1">
+<li><p>Review on the use of GitHub for collaborative projects.</p></li>
+<li><p>Explore the new features offered by the new development of RStudio: Quarto.</p></li>
+</ol>
+<section id="what-is-github" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-github"><img src="images/github-brands.svg" width="22" height="22"> What is GitHub?</h2>
+<p>GitHub is an internet hosting service designed for software development and version control using <a href="https://git-scm.com/">Git</a>. Basically, GitHub facilitates to work in a collaborative manner through multiple features designed to efficiently control changes made by users during a working session.</p>
+<p>Useful desktop applications:</p>
+<ul>
+<li><p><a href="https://desktop.github.com/">GitHub Desktop</a></p></li>
+<li><p><a href="https://www.gitkraken.com/">GitKraken</a></p></li>
+</ul>
+<p>Key glossary:</p>
+<table class="table">
+<colgroup>
+<col style="width: 1%">
+<col style="width: 7%">
+<col style="width: 90%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Concept</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><strong>version control</strong></td>
+<td><em>is the practice of tracking and managing changes to software code</em></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><strong>repository</strong></td>
+<td><em>is a code hosting platform for version control and collaboration.</em></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><strong>branch</strong></td>
+<td><em>is a unique set of code changes with a unique name</em>.</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td><strong>clone</strong></td>
+<td>is to copy a remote repository into your local</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td><strong>remote/local</strong></td>
+<td><em>they are Git repositories hosting code at different locations. “Remote” means located on the internet or another network. “Local” means located in your machine.</em></td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td><strong>origin</strong></td>
+<td><em>is the remote version of a given repository.</em></td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td><strong>main</strong>/<strong>master</strong></td>
+<td><em>is the name of the default branch. In the past “master” was the default. Since 2020, “main” is the default name of all new source code.</em></td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td><strong>commit</strong></td>
+<td><em>is a “revision” or individual set of changes to a file or group of files within a branch</em>.</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td><strong>pull / fetch</strong></td>
+<td><em>is the action to fetch and download content from a remote repository to update your local repository.</em></td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td><strong>push</strong></td>
+<td><em>is the action to upload content from a local repository to update its remote version (all within a given branch).</em></td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td><strong>pull request</strong></td>
+<td><p><em>is to let the repository owner to know about changes you’ve made to his code pushing to a new named branch. It allows to discuss, review, accept/reject the changes, and eventually accept and merge your branch to update the old version (normally, the “main” branch).</em></p>
+<p><em>Note: This action allows users to appear into the “contributors” list of a repository.</em></p></td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td><strong>merge</strong></td>
+<td><em>is the action of combining two branches into one, and putting a combined “forked history”.</em></td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td><strong>rebase</strong></td>
+<td><em>is moving or combining a sequence of commits to a new base commit.</em></td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td><strong>fast-forward</strong></td>
+<td><em>is merging when there is a direct linear path from the source branch (updating from) to the target branch (the one updating to).</em></td>
+</tr>
+<tr class="odd">
+<td>14</td>
+<td><strong>stash*</strong></td>
+<td><em>it temporarily shelves changes you’ve made to your copy so you can work on something else, and then come back and re-apply them later. *<u>very useful when you need to pull and update from the remote but you have been working on your local file</u>.</em></td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td><strong>revert</strong></td>
+<td><em>is the “undo” action to safely undoing changes. It creates a new commit that inverses changes.</em></td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td><strong>fork</strong></td>
+<td><em>is to copy others’ repository into your account. Your forked repo will act as an independent branch, so you can commit changes and put pull request from the forked repo.</em></td>
+</tr>
+<tr class="even">
+<td>17</td>
+<td><strong>Issues</strong></td>
+<td><em>is a section of any GitHub repository that allows to track issues experienced by users. Particularly useful for packages. Issues can be quoted and linked to pull requests.</em></td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td><strong>PATs</strong></td>
+<td>stands for Personal Access Tokens, which are an alternative authentication method to passwords and SSH</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td><strong>lfs</strong></td>
+<td><em>the lfs stands for Large File Storage. It allows you to track heavy files that are not allowed by default.</em></td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td><strong>GitHub Actions</strong></td>
+<td>is the way to automate continuous integration and delivery (CI/CD). Particularly, CI is a very important a software practice for package development, since it allows to detect errors on different operative systems via multiple automated tests.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="what-is-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-quarto">What is Quarto?</h2>
+<p>Quarto is an open-source scientific and technical publishing system built on <a href="https://pandoc.org/">Pandoc</a>. It allows to combine R, Python, Julia, and Java (Observable JS) for the design of reports, applications, websites, blogs, scientific publications, and more...</p>
+<p>Key concepts to review:</p>
+<ul>
+<li><p>qmd</p></li>
+<li><p>render</p></li>
+<li><p>yml</p></li>
+<li><p>css</p></li>
+</ul>
+<p>Learn more: <a href="https://quarto.org" class="uri">https://quarto.org</a></p>
+<section id="installing-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="installing-quarto">Installing Quarto</h3>
+<ol type="1">
+<li><a href="https://quarto.org/docs/get-started/">Download Quarto</a> or the <a href="https://www.rstudio.com/products/rstudio/download/">latest version of RStudio</a></li>
+</ol>
+</section>
+<section id="todays-exercise" class="level3">
+<h3 class="anchored" data-anchor-id="todays-exercise">Today’s exercise</h3>
+<p>Today, we will work together on the creation of our own <a href="https://github.com/rstudio/hex-stickers"><strong>hex-sticker</strong></a> using both Quarto and GitHub.</p>
+<section id="steps" class="level4">
+<h4 class="anchored" data-anchor-id="steps">Steps</h4>
+<ol type="1">
+<li><p>Clone a repository:</p>
+<ul>
+<li><p>Open your web-browser and go to <a href="https://github.com/adriancorrendo/Stats_Hub_2022" class="uri">https://github.com/adriancorrendo/Stats_Hub_2022</a></p></li>
+<li><p>Fork to your own GitHub account.</p></li>
+<li><p>Go to your forked repo and click on the “Code” button and copy the https address</p></li>
+</ul>
+<p><img src="images/paste-29986FBE.png" class="img-fluid" width="262"></p></li>
+<li><p>Open Rstudio and go to File &gt; New Project… &gt; version control &gt; Git, and paste the link.</p>
+<p><img src="images/paste-21734184.png" class="img-fluid" width="395"></p></li>
+<li><p>Go to the logo &gt; code and open the <strong>hexsticker_stats_hub.qmd</strong> file.</p></li>
+<li><p>Install the required packages.</p></li>
+<li><p>Modify the logos or create an alternative using the *.qmd file.</p></li>
+<li><p>Create a <strong>commit</strong>. with your changes.</p></li>
+<li><p><strong>Push</strong> (send changes).</p></li>
+<li><p>Contribute with a <strong>Pull Request</strong>.</p></li>
+<li><p>Wait for the PR to be merged into the original repo.</p></li>
+</ol>
+
+
+</section>
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./members.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Members</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./e2_bayes_1.html" class="pagination-link">
+        <span class="nav-page-text">2_bayes_1</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left"><span> Developed by Adrian Correndo using <a href="https://quarto.org/">Quarto</a>. License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>. </span></div>   
+  </div>
+</footer>
+
+
+
+</body></html>

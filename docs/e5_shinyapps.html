@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Adrian Correndo, Oct-03-2022">
+
+<title>Statasaurus - Fall 2022 - Week #5</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./e7_metaanalysis.html" rel="next">
+<link href="./e4_bayes_3.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Statasaurus - Fall 2022 - Week #5">
+<meta property="og:description" content="Shiny has many features that make it unique. My top list is the following:">
+<meta property="og:image" content="https://adriancorrendo.github.io/statasaurusweb/images\cover.png">
+<meta property="og:site-name" content="Statasaurus - Fall 2022">
+<meta property="og:image:height" content="656">
+<meta property="og:image:width" content="500">
+<meta name="twitter:title" content="Statasaurus - Fall 2022 - Week #5">
+<meta name="twitter:description" content="Shiny has many features that make it unique. My top list is the following:">
+<meta name="twitter:image" content="https://adriancorrendo.github.io/statasaurusweb/images\cover.png">
+<meta name="twitter:creator" content="@aacorrendo">
+<meta name="twitter:image-height" content="656">
+<meta name="twitter:image-width" content="500">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Week #5</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+      <a href="./" class="sidebar-logo-link">
+      <img src="./images/statasaurus_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main">
+    <a href="https://github.com/adriancorrendo/Stats_Hub_2022" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+</div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">About</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Description</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">Schedule</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./members.html" class="sidebar-item-text sidebar-link">Members</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Encounters</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e1_intro.html" class="sidebar-item-text sidebar-link">1_intro</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e2_bayes_1.html" class="sidebar-item-text sidebar-link">2_bayes_1</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e3_bayes_2.html" class="sidebar-item-text sidebar-link">3_bayes_2</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e4_bayes_3.html" class="sidebar-item-text sidebar-link">4_bayes_3</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e5_shinyapps.html" class="sidebar-item-text sidebar-link active">5_shinyapps</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e7_metaanalysis.html" class="sidebar-item-text sidebar-link">7_meta_analysis</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this section</h2>
+   
+  <ul>
+  <li><a href="#what-is-shiny" id="toc-what-is-shiny" class="nav-link active" data-scroll-target="#what-is-shiny"><strong>WHAT IS SHINY?</strong></a></li>
+  <li><a href="#main-features" id="toc-main-features" class="nav-link" data-scroll-target="#main-features">01. Main features</a></li>
+  <li><a href="#development-options" id="toc-development-options" class="nav-link" data-scroll-target="#development-options">02. Development options</a>
+  <ul class="collapse">
+  <li><a href="#i-base-shiny" id="toc-i-base-shiny" class="nav-link" data-scroll-target="#i-base-shiny">(i) Base Shiny</a></li>
+  <li><a href="#example-with-base-shiny" id="toc-example-with-base-shiny" class="nav-link" data-scroll-target="#example-with-base-shiny">Example with base Shiny</a></li>
+  <li><a href="#ii-flexdashboard" id="toc-ii-flexdashboard" class="nav-link" data-scroll-target="#ii-flexdashboard">(ii) Flexdashboard</a></li>
+  <li><a href="#example-with-flexdashboard" id="toc-example-with-flexdashboard" class="nav-link" data-scroll-target="#example-with-flexdashboard">Example with Flexdashboard</a></li>
+  <li><a href="#ii-ui-editor" id="toc-ii-ui-editor" class="nav-link" data-scroll-target="#ii-ui-editor">(ii) UI Editor</a></li>
+  </ul></li>
+  <li><a href="#deploying-the-shiny-app" id="toc-deploying-the-shiny-app" class="nav-link" data-scroll-target="#deploying-the-shiny-app">03. Deploying the Shiny App</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">04. Resources</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/adriancorrendo/statasaurusweb/edit/main/e5_shinyapps.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/adriancorrendo/statasaurusweb/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Week #5</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Adrian Correndo, Oct-03-2022 </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<table class="table">
+<colgroup>
+<col style="width: 73%">
+<col style="width: 26%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><h1 id="shiny-apps">Shiny apps</h1>
+<p>This article brings my personal experience and resources about this incredible tool called Shiny Apps.</p>
+<p>Let’s explore it!</p></td>
+<td><img src="images/logo-1.png" class="img-fluid" width="94"></td>
+</tr>
+</tbody>
+</table>
+<section id="what-is-shiny" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-shiny"><strong>WHAT IS SHINY?</strong></h2>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It simply consists of a packages family that facilitates the creation of interactive web tools 💻 using R! (and recently Python too)</p>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Why is Shiny relevant to us?</strong></p>
+<p>In simple words, it can make us better data scientists by:</p>
+<ul>
+<li><p>Adding value to our research, increasing the accessibility and visibility. A published paper is great but no the end of the story.</p></li>
+<li><p>Allowing stakeholders to explore our results in a flexible platform at their own pace.</p></li>
+<li><p>Offering interactive recommendation guidelines.</p>
+<ul>
+<li>See <a href="https://ciampittilab.shinyapps.io/cornyield0N/">cornyield0N</a>, <a href="https://ciampittilab.shinyapps.io/DONMaiz/">DONMaiz</a>, <a href="https://analytics.iasoybeans.com/cool-apps/SoybeanVRSsimulator/">SoybeanVRS</a></li>
+</ul></li>
+<li><p>Facilitating the use of software development by peers (e.g.&nbsp;demo of R packages)</p>
+<ul>
+<li>See <a href="https://ciampittilab.shinyapps.io/soiltestcorr/">soiltestcorr</a>, <a href="https://ciampittilab.shinyapps.io/metrica/">metrica</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="main-features" class="level2">
+<h2 class="anchored" data-anchor-id="main-features">01. Main features</h2>
+<p>Shiny has many features that make it unique. My top list is the following:</p>
+<ol type="1">
+<li><p>The main secret of shiny is the <a href="https://en.wikipedia.org/wiki/Reactive_programming"><em>reactive programming</em></a>. This is what if makes it easy to transform R code into an interactive platform that offers “<em>outputs</em>” that react to users’ “<em>inputs</em>”.</p></li>
+<li><p>A second great feature is a default design of the user interface (⚠️<em>spoiler alert!</em>) based on <a href="https://getbootstrap.com/">Bootstrap</a>, which is the reason why we don’t directly need to apply HTML, CSS or Java language by ourselves, this tool does it for us.</p>
+<p><img src="images/bootstrap-logo-shadow.png" width="42" height="35"></p></li>
+<li><p>The next special feature of shiny is a pre-built collection of <a href="https://shiny.rstudio.com/gallery/widget-gallery.html">widgets</a> that make the app attractive and intuitive (e.g.&nbsp;sliders, check boxes, value boxes, gauges, etc.)</p></li>
+<li><p>Then, probably the most important for us (no web developers), is its integration with <a href="https://shiny.rstudio.com/articles/interactive-docs.html">RMarkdown</a> (&amp; <a href="https://quarto.org/docs/gallery/#interactive-docs">Quarto</a>) through <a href="https://rstudio.github.io/flexdashboard/">Flexdashboard</a>.</p></li>
+<li><p>Of course, as you get more proficient, you will find there are many more features to squeeze…for more information visit <a href="https://rstudio.github.io/shiny/" class="uri">https://rstudio.github.io/shiny/</a></p></li>
+</ol>
+</section>
+<section id="development-options" class="level2">
+<h2 class="anchored" data-anchor-id="development-options">02. Development options</h2>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Today we are going to (briefly) cover the three main development options:</p>
+<p>(i) <a href="https://rstudio.github.io/shiny/">Base Shiny</a></p>
+<p>(ii) <a href="https://rstudio.github.io/flexdashboard/">Flexdashboard</a></p>
+<p>(iii) <a href="https://rstudio.github.io/shinyuieditor/index.html">UI Editor</a></p>
+</div>
+</div>
+<section id="i-base-shiny" class="level3">
+<h3 class="anchored" data-anchor-id="i-base-shiny">(i) Base Shiny</h3>
+<p><img src="images/logo-1.png" class="img-fluid" width="73"></p>
+<p>Base shiny is undoubtedly the most powerful option. However, I personally feel this as the most challenging one in terms of syntax, which is definitely its bottleneck for adoption.</p>
+<p>Structure.</p>
+<p>Base shiny apps are segregated into two main components:</p>
+<ul>
+<li><p><strong>User Interface</strong> (UI)</p>
+<ul>
+<li><p>it controls what and how is being displayed on the application page.</p></li>
+<li><p>it receives the users’ input to start with the reactive programming.</p></li>
+<li><p>thus, it includes the text, widgets, plots, etc…</p></li>
+</ul></li>
+<li><p><strong>Server</strong></p>
+<ul>
+<li><p>it controls the data that is used to produce the outcomes displayed on the UI.</p></li>
+<li><p>it normally contains the code to load the libraries, wrangle the data, and define plot functions.</p></li>
+<li><p>it borrows input values defined by the UI</p></li>
+</ul></li>
+</ul>
+<p>Both UI and server could be either included into a single file (App.R) or they can be separated into two files to simplify future changes.</p>
+<p>Let’s see this with one example</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Create a new project (and directory) along with a script file named “<code>app.R"</code> file containing a basic app.</p>
+<ul>
+<li><p>Go to <strong>File &gt; New Project &gt;</strong> <strong>New Directory &gt; Shiny Web Application.</strong></p></li>
+<li><p>File &gt; New File &gt; R Script, or use the shortcut “Ctrl + Shift + N”</p></li>
+<li><p>Then add the following lines</p></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(shiny)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ui &lt;- fluidPage(</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   "Hello, world! We are Statasaurus!"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># server &lt;- function(input, output) {</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># shinyApp(ui, server)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-with-base-shiny" class="level3">
+<h3 class="anchored" data-anchor-id="example-with-base-shiny">Example with base Shiny</h3>
+<p>SHINYAPP: <a href="https://ciampittilab.shinyapps.io/soiltestcorr/" class="uri">https://ciampittilab.shinyapps.io/soiltestcorr/</a></p>
+<p>CODE: <a href="https://github.com/adriancorrendo/Shiny_soiltestcorr" class="uri">https://github.com/adriancorrendo/Shiny_soiltestcorr</a></p>
+</section>
+<section id="ii-flexdashboard" class="level3">
+<h3 class="anchored" data-anchor-id="ii-flexdashboard">(ii) Flexdashboard</h3>
+<p><img src="images/logo-03.png" class="img-fluid" width="73"></p>
+<p>Flexdashboard is a package developed by RStudio that allows to publish interactive dashboards using R Markdown (&amp; Quarto) syntax.</p>
+<p>The main features that I personally highlight are:</p>
+<ul>
+<li><p><strong>Layout</strong>: the easiness to specify the app skeleton using row/column based layouts.</p></li>
+<li><p><strong>Report format</strong>: the Rmarkdown format allows the keep a similar format used for our data processing and analysis, so we don’t need to drastically change our usual syntax.</p></li>
+<li><p><strong>Webpage</strong>: we can develop not only the shiny apps but also webpages, blogs with the shiny apps embedded on them.</p></li>
+<li><p><strong>Formatting</strong>: As well as base shiny, flexdashboard can optionally apply Bootstrap and <a href="https://rstudio.github.io/bslib/">bslib</a> to customize colors, fonts, and more.</p></li>
+<li><p><strong>Display code in place</strong>: for teaching, the RMarkdown syntax using chunks allows us to eventually display the code within the same location on the UI.</p></li>
+<li><p><strong>UI-Server</strong>: There is no need of segregating our code into UI and Server anymore.</p></li>
+</ul>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Advanced users consider that flexdashboard is limited in comparison to what one can do with base shiny (Shiny &amp; Shinydashboard packages).</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("flexdashboard")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-with-flexdashboard" class="level3">
+<h3 class="anchored" data-anchor-id="example-with-flexdashboard">Example with Flexdashboard</h3>
+<p>Let’s see now the metrica app code using Flexdashboard</p>
+<p>SHINYAPP: <a href="https://ciampittilab.shinyapps.io/metrica/" class="uri">https://ciampittilab.shinyapps.io/metrica/</a></p>
+<p>CODE: <a href="https://github.com/adriancorrendo/flexdashboard_metrica" class="uri">https://github.com/adriancorrendo/flexdashboard_metrica</a></p>
+</section>
+<section id="ii-ui-editor" class="level3">
+<h3 class="anchored" data-anchor-id="ii-ui-editor">(ii) UI Editor</h3>
+<p>The <a href="https://rstudio.github.io/shinyuieditor/index.html">UI Editor</a> is a tool currently under development intended to remove barriers on the use of base shiny by non-webpage developers.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("remotes")</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Install using the remotes package</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("rstudio/shinyuieditor")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It basically speeds up to process of creating the layout of the UI using an interactive interface. It would be a kind of Shiny App for creating Shiny Apps.</p>
+<ul>
+<li><strong>Code template</strong>: the UI Editor will create the necessary code in Base Shiny syntax for us (App.R). Later we would just need to fine tune formatting, fonts, colors, etc. This feature is a claear advantage for cases when we would need advanced features into the layout where Flexdashboard could be limited.</li>
+</ul>
+<p>Keep tabs on this cause more resources on the UI Editor are coming soon</p>
+<div data-align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Zac1qdaYNsY" frameborder="0" allowfullscreen="">
+</iframe>
+</div>
+</section>
+</section>
+<section id="deploying-the-shiny-app" class="level2">
+<h2 class="anchored" data-anchor-id="deploying-the-shiny-app">03. Deploying the Shiny App</h2>
+<p>Believe it or not, publishing our Shiny app is quite easy! (with limitations)</p>
+<p>We just need to:</p>
+<ol type="1">
+<li><p><a href="https://www.shinyapps.io/admin/#/signup">Create an account</a> on shinyapps.io (for free!).</p></li>
+<li><p>Install the <em>rsconnect</em> package in our session.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("rsconnect")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li><p>Account authorization: go to your shinyapps account and copy the TOKEN (showing the <em>secret</em>) provided in your dashboard and run it in your RStudio console at <strong>Tools &gt; Global Options &gt; Publishing &gt; Connect … &gt; ShinyApps.io</strong>.</p>
+<p><img src="images/paste-AF10607F.png" class="img-fluid"></p></li>
+<li><p>Click on the ‘Publish’ button at the top right corner.</p></li>
+<li><p>Done!</p></li>
+</ol>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">04. Resources</h2>
+<ol type="1">
+<li>Mastering Shiny Book: <a href="https://mastering-shiny.org/" class="uri">https://mastering-shiny.org/</a></li>
+</ol>
+<p><img src="images/cover.png" class="img-fluid" width="131"></p>
+<ol start="3" type="1">
+<li>Official User Guide: <a href="https://docs.rstudio.com/shinyapps.io/" class="uri">https://docs.rstudio.com/shinyapps.io/</a></li>
+<li>Shiny Tutorial: <a href="https://shiny.rstudio.com/tutorial/" class="uri">https://shiny.rstudio.com/tutorial/</a></li>
+<li>Shiny Gallery: <a href="https://shiny.rstudio.com/gallery/#demos" class="uri">https://shiny.rstudio.com/gallery/#demos</a></li>
+<li>Flexdashboard Shiny Gallery: <a href="https://pkgs.rstudio.com/flexdashboard/articles/examples.html" class="uri">https://pkgs.rstudio.com/flexdashboard/articles/examples.html</a></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./e4_bayes_3.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4_bayes_3</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./e7_metaanalysis.html" class="pagination-link">
+        <span class="nav-page-text">7_meta_analysis</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left"><span> Developed by Adrian Correndo using <a href="https://quarto.org/">Quarto</a>. License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>. </span></div>   
+  </div>
+</footer>
+
+
+
+</body></html>
